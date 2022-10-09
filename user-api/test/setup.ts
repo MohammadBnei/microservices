@@ -24,5 +24,5 @@ export default async () => {
   const seeder = orm.getSeeder();
   await seeder.seed(UserSeeder);
 
-  await orm.close();
+  // await orm.close();
 };
