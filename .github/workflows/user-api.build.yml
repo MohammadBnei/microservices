@@ -19,10 +19,8 @@ jobs:
   build-test:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
-    # Docker Hub image that `container-job` executes in
     container: node:17
 
-    # Service containers to run with `container-job`
     services:
       # Label used to access the service container
       mariadb:
@@ -34,7 +32,7 @@ jobs:
           MARIADB_USER: nestjs
           MARIADB_PASSWORD: password
         ports:
-          - 3306
+          - 3306:3306
 
     defaults:
       run:
@@ -73,4 +71,3 @@ jobs:
         run: pnpm test:e2e
         env:
           DATABASE_HOST: localhost
-          DATABASE_PORT: ${{ job.services.mariadb.ports[3306] }}
