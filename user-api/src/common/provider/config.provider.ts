@@ -12,6 +12,7 @@ export const configProvider = {
       API_PREFIX: Joi.string(),
       SWAGGER_ENABLE: Joi.string(),
       DATABASE_HOST: Joi.string().required(),
+      DATABASE_PORT: Joi.string(),
       DATABASE_PASSWORD: Joi.string().required(),
       DATABASE_USER: Joi.string().required(),
       DATABASE_NAME: Joi.string().required(),
@@ -32,6 +33,7 @@ export const configProvider = {
       DATABASE_NAME: `${env.DATABASE_NAME}`,
       DATABASE_HOST: `${env.DATABASE_HOST}`,
       DATABASE_PASSWORD: `${env.DATABASE_PASSWORD}`,
+      DATABASE_PORT: `${env.DATABASE_PORT}`,
       JWT_SECRET: `${env.JWT_SECRET}`,
     };
   },

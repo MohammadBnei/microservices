@@ -21,8 +21,6 @@ export default async () => {
   });
 
   await orm.getSchemaGenerator().refreshDatabase();
-  const migrator = orm.getMigrator();
-  await migrator.up();
   const seeder = orm.getSeeder();
   await seeder.seed(UserSeeder);
 

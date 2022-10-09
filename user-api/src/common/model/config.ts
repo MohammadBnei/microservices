@@ -6,6 +6,7 @@ export interface Config {
   readonly DATABASE_URL: string;
   readonly DATABASE_NAME: string;
   readonly DATABASE_HOST: string;
+  readonly DATABASE_PORT: string;
   readonly DATABASE_PASSWORD: string;
 
   readonly SWAGGER_ENABLE: number;
