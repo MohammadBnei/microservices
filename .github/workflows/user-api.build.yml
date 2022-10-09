@@ -1,0 +1,66 @@
+name: User api build and test
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - user-api/**
+  pull_request:
+    branches:
+      - master
+    paths:
+      - user-api/**
+
+jobs:
+  # Label of the container job
+  build-test:
+    # Containers must run in Linux based operating systems
+    runs-on: ubuntu-latest
+    # Docker Hub image that `container-job` executes in
+    container: node:17
+
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      mariadb:
+        # Docker Hub image
+        image: mariadb
+        env:
+          ALLOW_EMPTY_PASSWORD: yes
+          MARIADB_DATABASE: user
+          MARIADB_USER: nestjs
+          MARIADB_PASSWORD: password
+
+    defaults:
+      run:
+        working-directory: user-api
+
+    steps:
+      # Downloads a copy of the code in your repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2.2.2
+      
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: E2E Test
+        run: pnpm test:e2e
