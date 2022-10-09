@@ -34,9 +34,9 @@ jobs:
           MARIADB_USER: nestjs
           MARIADB_PASSWORD: password
         options: >-
-          --health-cmd "/usr/bin/mysql --user=nestjs --password=password --execute \"SHOW DATABASES;\"
-          --health-interval 10s
-          --health-timeout 5s
+          --health-cmd "mysqladmin ping"
+          --health-interval 5s
+          --health-timeout 2s
           --health-retries 5
 
     defaults:
