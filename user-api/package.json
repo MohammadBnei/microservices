@@ -1,10 +1,11 @@
 {
-  "name": "new",
+  "name": "user-api",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Mohammad-Amine BANAEI",
   "private": true,
   "license": "UNLICENSED",
+  "repository": "https://github.com/MohammadBnei/microservices",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
