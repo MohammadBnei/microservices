@@ -33,6 +33,11 @@ jobs:
           MARIADB_DATABASE: user
           MARIADB_USER: nestjs
           MARIADB_PASSWORD: password
+        options: >-
+          --health-cmd "mysql --user=nestjs --password=password --execute \"SHOW DATABASES;\"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     defaults:
       run:
@@ -68,4 +73,4 @@ jobs:
         run: pnpm build
 
       - name: E2E Test
-        run: pnpm test:e2e
+        run: DATABASE_HOST=mariadb pnpm test:e2e
