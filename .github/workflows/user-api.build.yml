@@ -72,4 +72,5 @@ jobs:
       - name: E2E Test
         run: pnpm test:e2e
         env:
-          DATABASE_HOST: mariadb
+          DATABASE_HOST: localhost
+          DATABASE_PORT: ${{ job.services.mariadb.ports[3306] }}
