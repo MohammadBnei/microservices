@@ -33,7 +33,7 @@ jobs:
           MARIADB_USER: nestjs
           MARIADB_PASSWORD: password
         options: >-
-          --health-cmd="mysql --protocol=tcp -h mariadb -u root -e "show databases;""
+          --health-cmd="mysql --protocol=tcp -h mariadb -u root -e 'show databases;'"
           --health-interval=5s 
           --health-timeout=2s 
           --health-retries=5
