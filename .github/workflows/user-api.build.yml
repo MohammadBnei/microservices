@@ -20,7 +20,7 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
 
-    container: node:17
+    container: node:16
 
     services:
       # Label used to access the service container
