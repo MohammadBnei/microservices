@@ -67,15 +67,7 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Verify MariaDB connection
-        env:
-          PORT: ${{ job.services.mariadb.ports[3306] }}
-        run: |
-          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
-            sleep 1
-          done 
-
       - name: E2E Test
         run: pnpm test:e2e
         env:
-          DATABASE_HOST: localhost
+          DATABASE_HOST: mariadb
