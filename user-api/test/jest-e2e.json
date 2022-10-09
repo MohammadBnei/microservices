@@ -10,8 +10,5 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "setupFiles": [
-    "./setup-env.ts"
-  ],
   "globalSetup": "./setup.ts"
 }
