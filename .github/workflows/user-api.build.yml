@@ -6,11 +6,13 @@ on:
       - master
     paths:
       - user-api/**
+      - .github/workflows/user-api.buid.yml
   pull_request:
     branches:
       - master
     paths:
       - user-api/**
+      - .github/workflows/user-api.buid.yml
 
 jobs:
   # Label of the container job
