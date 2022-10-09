@@ -1,29 +1,23 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test } from '@nestjs/testing';
 import { Role } from '../../tokens';
 import { UserController } from './user.controller';
-import { ModuleMocker, MockFunctionMetadata } from 'jest-mock';
-
-const moduleMocker = new ModuleMocker(global);
+import { UserService } from '../service';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
+import config from '../../mikro-orm.config';
 
 describe('UserController', () => {
   let controller: UserController;
+  let service: UserService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    const moduleRef = await Test.createTestingModule({
       controllers: [UserController],
-    })
-      .useMocker((token) => {
-        if (typeof token === 'function') {
-          const mockMetadata = moduleMocker.getMetadata(
-            token,
-          ) as MockFunctionMetadata<any, any>;
-          const Mock = moduleMocker.generateFromMetadata(mockMetadata);
-          return new Mock();
-        }
-      })
-      .compile();
+      providers: [UserService],
+      imports: [MikroOrmModule.forRoot(config)],
+    }).compile();
 
-    controller = module.get<UserController>(UserController);
+    service = moduleRef.get<UserService>(UserService);
+    controller = moduleRef.get<UserController>(UserController);
   });
 
   it('should be defined', () => {

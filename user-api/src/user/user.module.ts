@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { User } from './model';
 import { UserService } from './service';
 import { UserController } from './controller';
-import { CommonModule } from 'src/common';
+import { CommonModule } from '../common';
 
 @Module({
   imports: [MikroOrmModule.forFeature({ entities: [User] }), CommonModule],

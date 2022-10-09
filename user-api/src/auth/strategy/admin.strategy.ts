@@ -17,7 +17,6 @@ export class AdminStrategy extends PassportStrategy(Strategy, 'admin') {
     });
   }
   async validate(payload: any): Promise<any> {
-    console.log({ payload });
     if (payload.role !== Role.ADMIN) {
       throw new UnauthorizedException('You must be admin.');
     }

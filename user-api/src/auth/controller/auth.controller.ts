@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
-import { LoginInput } from 'src/user/model/user.input';
+import { LoginInput } from '../../user/model';
 import { AuthService } from '../service';
 
 @Controller('auth')

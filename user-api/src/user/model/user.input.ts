@@ -5,13 +5,13 @@ import { Role } from '../../tokens';
 import { lowerTrim } from '../../utils/input';
 
 export class UserInput {
-  @Length(2, 40)
-  @ApiProperty({ description: 'First name', example: 'John' })
+  @ApiProperty({ description: 'First name', example: 'John', required: false })
+  // @Length(2, 40)
   @Transform(lowerTrim)
   public readonly firstname?: string;
 
-  @ApiProperty({ description: 'Last name', example: 'Doe' })
-  @Length(2, 40)
+  @ApiProperty({ description: 'Last name', example: 'Doe', required: false })
+  // @Length(2, 40)
   @Transform(lowerTrim)
   public readonly lastname?: string;
 
@@ -51,13 +51,13 @@ export class LoginInput {
 }
 
 export class UpdateInput {
-  @Length(2, 40)
   @ApiProperty({ description: 'First name', example: 'John' })
+  // @Length(2, 40)
   @Transform(lowerTrim)
   public readonly firstname: string;
 
   @ApiProperty({ description: 'Last name', example: 'Doe' })
-  @Length(2, 40)
+  // @Length(2, 40)
   @Transform(lowerTrim)
   public readonly lastname: string;
 

@@ -18,10 +18,10 @@ export class User {
   @PrimaryKey()
   id!: number;
 
-  @Property()
+  @Property({ nullable: true })
   firstname?: string;
 
-  @Property()
+  @Property({ nullable: true })
   lastname?: string;
 
   @Property()
@@ -59,8 +59,8 @@ export class User {
 
   constructor(newUser: UserInput) {
     wrap(this).assign({ ...newUser } as any);
-    this.firstname = newUser.firstname.toLowerCase().trim();
-    this.lastname = newUser.lastname.toLowerCase().trim();
+    this.firstname = newUser.firstname?.toLowerCase().trim();
+    this.lastname = newUser.lastname?.toLowerCase().trim();
     this.email = newUser.email.toLowerCase().trim();
     this.role = newUser.role || Role.BUYER;
   }

@@ -1,11 +1,6 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { User, UserData, UserInput } from '../model';
 import { UpdateInput } from '../model/user.input';
 
@@ -26,7 +21,7 @@ export class UserService {
     const user = await this.getUser(query);
 
     if (!user) {
-      throw new NotFoundException();
+      throw new BadRequestException('User not found');
     }
 
     return user;
@@ -46,7 +41,7 @@ export class UserService {
   async createUser(data: UserInput): Promise<void> {
     const found = await this.getUser(data.email);
     if (found) {
-      throw new HttpException('Email already taken', HttpStatus.BAD_REQUEST);
+      throw new BadRequestException('Email already taken');
     }
     const newUser = new User(data);
     return this.ur.persistAndFlush(newUser);
@@ -55,11 +50,11 @@ export class UserService {
   async comparePassword(email: string, password: string): Promise<UserData> {
     const user = await this.ur.findOne({ email });
     if (!user) {
-      throw new NotFoundException();
+      throw new BadRequestException('User not found');
     }
 
     if (!(await user.comparePassword(password))) {
-      throw new HttpException('Wrong password', HttpStatus.BAD_REQUEST);
+      throw new BadRequestException('Wrong password');
     }
 
     return user.toJSON();
@@ -69,7 +64,7 @@ export class UserService {
     const user = await this.ur.findOne({ id: +id });
 
     if (!user) {
-      throw new NotFoundException();
+      throw new BadRequestException('User not found');
     }
 
     this.ur.assign(user, data);
@@ -82,7 +77,7 @@ export class UserService {
     const user = await this.ur.findOne({ id: +id });
 
     if (!user) {
-      throw new NotFoundException();
+      throw new BadRequestException('User not found');
     }
 
     await this.ur.remove(user);

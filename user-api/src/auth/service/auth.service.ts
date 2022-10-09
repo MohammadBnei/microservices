@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserData } from 'src/user/model';
-import { UserService } from 'src/user/service';
+import { UserService } from '../../user/service';
 import { jwtOptions } from '../model/jwt-options';
 
 @Injectable()

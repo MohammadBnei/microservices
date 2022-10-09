@@ -10,7 +10,7 @@ import { AppModule } from './app.module';
 
 import { CommonModule, LogInterceptor } from './common';
 
-function createSwagger(app: INestApplication) {
+export function createSwagger(app: INestApplication) {
   const version = process.env.npm_package_version;
 
   const options = new DocumentBuilder()
