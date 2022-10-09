@@ -15,6 +15,11 @@ services:
       - MARIADB_DATABASE=user
       - MARIADB_USER=nestjs
       - MARIADB_PASSWORD=password
+    healthcheck:
+      test: mysql --protocol=tcp -h mariadb -u root -e "show databases;"
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # user-api:
   #   image: node:16
@@ -22,9 +27,8 @@ services:
   #   volumes:
   #     - /app/node_modules
   #     - ./user-api:/app/
-  #   stdin_open: true
   #   env_file:
-  #     - ./user-api/.env
+  #     - ./user-api/.env.test
 
 volumes:
   mariadb_data:
