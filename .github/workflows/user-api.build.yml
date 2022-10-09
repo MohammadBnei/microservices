@@ -35,7 +35,7 @@ jobs:
           MARIADB_PASSWORD: password
         options: >-
           --health-cmd "mysqladmin ping"
-          --health-interval 5s
+          --health-interval 10s
           --health-timeout 2s
           --health-retries 5
 
