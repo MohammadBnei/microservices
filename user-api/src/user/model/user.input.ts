@@ -8,12 +8,12 @@ export class UserInput {
   @Length(2, 40)
   @ApiProperty({ description: 'First name', example: 'John' })
   @Transform(lowerTrim)
-  public readonly firstname: string;
+  public readonly firstname?: string;
 
   @ApiProperty({ description: 'Last name', example: 'Doe' })
   @Length(2, 40)
   @Transform(lowerTrim)
-  public readonly lastname: string;
+  public readonly lastname?: string;
 
   @ApiProperty({
     description: 'User unique email',

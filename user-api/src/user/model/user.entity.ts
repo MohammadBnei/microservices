@@ -19,10 +19,10 @@ export class User {
   id!: number;
 
   @Property()
-  firstname: string;
+  firstname?: string;
 
   @Property()
-  lastname: string;
+  lastname?: string;
 
   @Property()
   @Unique()

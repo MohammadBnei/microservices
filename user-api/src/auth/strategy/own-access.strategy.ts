@@ -3,7 +3,7 @@ import { ModuleRef } from '@nestjs/core';
 import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Role } from 'src/tokens';
+import { Role } from '../../tokens';
 
 @Injectable()
 export class OwnAccessStrategy extends PassportStrategy(

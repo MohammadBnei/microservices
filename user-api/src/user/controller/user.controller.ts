@@ -10,8 +10,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AdminGuard } from 'src/auth/guard/admin.guard';
-import { OwnAccessGuard } from 'src/auth/guard/own-access.guard';
+import { AdminGuard } from '../../auth/guard/admin.guard';
+import { OwnAccessGuard } from '../../auth/guard/own-access.guard';
 import { User, UserData, UserInput } from '../model';
 import { IdInput, LoginInput, UpdateInput } from '../model/user.input';
 import { UserService } from '../service';
