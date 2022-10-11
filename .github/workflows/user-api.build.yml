@@ -82,6 +82,9 @@ jobs:
         run: pnpm test:e2e
         env:
           DATABASE_HOST: localhost
-          
+          DATABASE_PASSWORD: password
+          DATABASE_USER: nestjs
+          DATABASE_NAME: test
+
       - name: Build
         run: pnpm build
