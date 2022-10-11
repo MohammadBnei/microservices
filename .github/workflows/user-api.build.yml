@@ -20,13 +20,17 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
 
-    container: node:17
+    strategy:
+      matrix:
+        version: [16, '17.9.1']
 
     services:
       # Label used to access the service container
       mariadb:
         # Docker Hub image
         image: bitnami/mariadb:10.9.3
+        ports:
+          - 3306:3306
         env:
           ALLOW_EMPTY_PASSWORD: yes
           MARIADB_DATABASE: user
@@ -50,7 +54,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 17
+          node-version: ${{ matrix.version }}
 
       - uses: pnpm/action-setup@v2.0.1
         with:
@@ -79,4 +83,4 @@ jobs:
       - name: E2E Test
         run: pnpm test:e2e
         env:
-          DATABASE_HOST: mariadb
+          DATABASE_HOST: localhost

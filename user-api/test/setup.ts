@@ -6,6 +6,7 @@ import { config as dotenv } from 'dotenv';
 dotenv({
   path: '.env.test',
 });
+
 let orm: MikroORM<any>;
 
 export default async () => {
