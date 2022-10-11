@@ -23,7 +23,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        version: [16, '17.9.1']
+        version: ['17.9.1']
 
     services:
       # Label used to access the service container
