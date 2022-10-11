@@ -28,7 +28,7 @@ describe('UserController (e2e)', () => {
 
     app.setGlobalPrefix(process.env.API_PREFIX || '/api/v1/');
 
-    app.useGlobalPipes(new ValidationPipe());
+    // app.useGlobalPipes(new ValidationPipe());
     app.useGlobalInterceptors(
       new ClassSerializerInterceptor(app.get(Reflector)),
     );

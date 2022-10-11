@@ -20,11 +20,6 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
 
-    continue-on-error: true
-    strategy:
-      matrix:
-        version: ['17.9.1']
-
     services:
       # Label used to access the service container
       mariadb:
@@ -55,7 +50,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.version }}
+          node-version: 17.9.1
 
       - uses: pnpm/action-setup@v2.0.1
         with:
