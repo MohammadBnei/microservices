@@ -85,6 +85,7 @@ jobs:
           DATABASE_PASSWORD: password
           DATABASE_USER: nestjs
           DATABASE_NAME: test
+          JWT_SECRET: secret
 
       - name: Build
         run: pnpm build
