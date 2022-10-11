@@ -78,10 +78,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build
-        run: pnpm build
-
       - name: E2E Test
         run: pnpm test:e2e
         env:
           DATABASE_HOST: localhost
+          
+      - name: Build
+        run: pnpm build

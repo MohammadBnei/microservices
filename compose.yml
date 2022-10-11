@@ -21,14 +21,17 @@ services:
       timeout: 5s
       retries: 5
 
-  # user-api:
-  #   image: node:16
-  #   working_dir: /app
-  #   volumes:
-  #     - /app/node_modules
-  #     - ./user-api:/app/
-  #   env_file:
-  #     - ./user-api/.env.test
+  user-api:
+    image: node:16
+    working_dir: /app
+    volumes:
+      - /app/node_modules
+      - ./user-api:/app/
+    env_file:
+      - ./user-api/.env.test
+    environment:
+      - DATABASE_HOST=mariadb
+    stdin_open: true
 
 volumes:
   mariadb_data:
