@@ -50,31 +50,31 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 17.9.1
+          node-version: 18
 
       # - uses: pnpm/action-setup@v2.0.1
-      #   with:
-      #     version: 7.13.4
-      #     run_install: false
+        with:
+          version: 7.13.4
+          run_install: false
           
-      # - name: Get pnpm store directory
-      #   id: pnpm-cache
-      #   run: |
-      #     echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
 
-      # - uses: actions/cache@v3
-      #   name: Setup pnpm cache
-      #   with:
-      #     path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-      #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-pnpm-store-
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: E2E Test
-        run: npm run test:e2e
+        run: pnpm test:e2e
         env:
           DATABASE_HOST: localhost
           DATABASE_PASSWORD: password
@@ -83,4 +83,4 @@ jobs:
           JWT_SECRET: secret
 
       - name: Build
-        run: npm run build
+        run: pnpm build

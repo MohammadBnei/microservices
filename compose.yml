@@ -22,7 +22,7 @@ services:
       retries: 5
 
   user-api:
-    image: node:17-alpine
+    image: node:18-alpine
     working_dir: /app
     volumes:
       - /app/node_modules
