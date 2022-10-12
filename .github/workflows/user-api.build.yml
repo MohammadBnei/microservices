@@ -18,25 +18,25 @@ jobs:
   # Label of the container job
   build-test:
     # Containers must run in Linux based operating systems
-    # runs-on: ubuntu-latest
-    runs-on: macos-latest
-    # services:
+    runs-on: ubuntu-latest
+
+    services:
     #   # Label used to access the service container
-    #   mariadb:
-    #     # Docker Hub image
-    #     image: bitnami/mariadb:10.9.3
-    #     ports:
-    #       - 3306:3306
-    #     env:
-    #       ALLOW_EMPTY_PASSWORD: yes
-    #       MARIADB_DATABASE: user
-    #       MARIADB_USER: nestjs
-    #       MARIADB_PASSWORD: password
-    #     options: >-
-    #       --health-cmd="mysql --protocol=tcp -h mariadb -u root -e 'show databases;'"
-    #       --health-interval=5s 
-    #       --health-timeout=2s 
-    #       --health-retries=5
+      mariadb:
+        # Docker Hub image
+        image: bitnami/mariadb:10.9.3
+        ports:
+          - 3306:3306
+        env:
+          ALLOW_EMPTY_PASSWORD: yes
+          MARIADB_DATABASE: user
+          MARIADB_USER: nestjs
+          MARIADB_PASSWORD: password
+        options: >-
+          --health-cmd="mysql --protocol=tcp -h mariadb -u root -e 'show databases;'"
+          --health-interval=5s 
+          --health-timeout=2s 
+          --health-retries=5
 
 
     defaults:
@@ -70,17 +70,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - uses: isbang/compose-action@v1.3.2
-        with:
-          compose-file: "compose.yml"
-          down-flags: "--volumes"
-          services: |
-            mariadb
-        env:
-          ALLOW_EMPTY_PASSWORD: "yes"
-          MARIADB_DATABASE: "user"
-          MARIADB_USER: "nestjs"
-          MARIADB_PASSWORD: "password"
+      # - uses: isbang/compose-action@v1.3.2
+      #   with:
+      #     compose-file: "compose.yml"
+      #     down-flags: "--volumes"
+      #     services: |
+      #       mariadb
+      #   env:
+      #     ALLOW_EMPTY_PASSWORD: "yes"
+      #     MARIADB_DATABASE: "user"
+      #     MARIADB_USER: "nestjs"
+      #     MARIADB_PASSWORD: "password"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
