@@ -76,10 +76,10 @@ jobs:
           services: |
             mariadb
           env:
-            ALLOW_EMPTY_PASSWORD: yes
-            MARIADB_DATABASE: user
-            MARIADB_USER: nestjs
-            MARIADB_PASSWORD: password
+            ALLOW_EMPTY_PASSWORD: "yes"
+            MARIADB_DATABASE: "user"
+            MARIADB_USER: "nestjs"
+            MARIADB_PASSWORD: "password"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
