@@ -75,7 +75,7 @@ jobs:
       - name: E2E Test
         run: pnpm test:e2e
         env:
-          DATABASE_HOST: localhost
+          DATABASE_HOST: mariadb
           DATABASE_PASSWORD: password
           DATABASE_USER: nestjs
           DATABASE_NAME: test
