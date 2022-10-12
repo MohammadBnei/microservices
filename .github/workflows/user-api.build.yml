@@ -18,7 +18,8 @@ jobs:
   # Label of the container job
   build-test:
     # Containers must run in Linux based operating systems
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: self-hosted
     # services:
     #   # Label used to access the service container
     #   mariadb:
