@@ -151,7 +151,7 @@ describe('AuthController (e2e)', () => {
   });
 
   // DELETE
-  it('should connect with the admin user and update a random user', async () => {
+  it('should connect with the admin user and delete the first dummy', async () => {
     let res = await request(app.getHttpServer())
       .post(apiUrl`auth/login`)
       .send({
@@ -162,28 +162,15 @@ describe('AuthController (e2e)', () => {
 
     const jwt = res.body?.jwt;
 
-    let user: UserData = res.body?.user;
+    const user: UserData = res.body?.user;
     expect(user.id).toBeDefined();
 
-    const id = +user.id === 2 ? '1' : '2';
-    const role = user.role === Role.BUYER ? Role.SELLER : Role.BUYER;
-
     res = await request(app.getHttpServer())
-      .put(apiUrl`user/` + id)
+      .delete(apiUrl`user/` + 4)
       .set('Authorization', 'Bearer ' + jwt)
-      .send({
-        role,
-      })
       .set('Accept', 'application/json');
 
     expect(res.status).toBe(HttpStatus.OK);
-
-    user = res.body;
-    expect(user?.id).toBe(id);
-    expect(user?.firstname).toBeDefined();
-    expect(user?.lastname).toBeDefined();
-    expect(user?.email).toBeDefined();
-    expect(user?.role).toBe(role);
   });
 
   // BUYER
