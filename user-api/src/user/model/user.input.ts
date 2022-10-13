@@ -33,6 +33,7 @@ export class UserInput {
   @ApiProperty({
     description: 'User role, buyer or seller',
     example: 'buyer',
+    enum: Role,
   })
   @IsEnum(Role, {
     message: `Role must be one of ${Object.values(Role).join(' or ')}`,

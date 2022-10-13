@@ -19,7 +19,7 @@ export class UserData {
 
   @ApiProperty({
     description: 'User role, buyer or seller',
-    example: 'buyer',
+    enum: Role,
   })
   public readonly role: Role;
 }
