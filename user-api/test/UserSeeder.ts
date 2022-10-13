@@ -39,12 +39,17 @@ export class UserSeeder extends Seeder {
   constructor() {
     super();
   }
+
   async run(em: EntityManager): Promise<void> {
-    [
-      UserSeeder.houari,
-      UserSeeder.alireza,
-      UserSeeder.karim,
-      UserSeeder.dummy,
-    ].forEach((user) => em.create(User, user));
+    [UserSeeder.houari, UserSeeder.alireza, UserSeeder.karim].forEach((user) =>
+      em.create(User, user),
+    );
+
+    for (let i = 0; i < 20; i++) {
+      em.create(User, {
+        ...UserSeeder.dummy,
+        email: i + UserSeeder.dummy.email,
+      });
+    }
   }
 }

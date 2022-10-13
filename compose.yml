@@ -21,17 +21,19 @@ services:
       timeout: 5s
       retries: 5
 
-  user-api:
+  user-api-test:
     image: node:18-alpine
     working_dir: /app
     volumes:
-      - /app/node_modules
       - ./user-api:/app/
-    env_file:
-      - ./user-api/.env.test
     environment:
       - DATABASE_HOST=mariadb
-    stdin_open: true
+      - PORT=3000
+      - DATABASE_USER=nestjs
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=test
+      - JWT_SECRET=test
+    command: npm run test:e2e
 
 volumes:
   mariadb_data:
