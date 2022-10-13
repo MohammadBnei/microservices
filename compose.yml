@@ -35,6 +35,18 @@ services:
       - JWT_SECRET=test
     command: npm run test:e2e
 
+  user-api-prod:
+    image: user-api
+    environment:
+      - DATABASE_HOST=mariadb
+      - PORT=3000
+      - DATABASE_USER=nestjs
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=test
+      - JWT_SECRET=test
+    ports:
+      - 8080:3000
+
 volumes:
   mariadb_data:
     driver: local

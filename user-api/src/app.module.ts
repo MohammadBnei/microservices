@@ -4,9 +4,11 @@ import { CommonModule } from './common';
 import config from './mikro-orm.config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     MikroOrmModule.forRoot(config),
     CommonModule,
     UserModule,
