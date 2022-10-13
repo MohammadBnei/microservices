@@ -7,10 +7,6 @@ let orm: MikroORM<any>;
 export default async () => {
   orm = await MikroORM.init({
     ...config,
-    host: process.env.DATABASE_HOST || 'localhost',
-    user: process.env.DATABASE_USER || 'nestjs',
-    password: process.env.DATABASE_PASSWORD || 'password',
-    dbName: process.env.DATABASE_NAME || 'test',
     migrations: {
       allOrNothing: true,
     },

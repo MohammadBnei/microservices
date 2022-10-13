@@ -31,9 +31,10 @@ export const configProvider = {
       SWAGGER_ENABLE: +env.SWAGGER_ENABLE || 1,
       DATABASE_URL: `${env.DATABASE_URL}`,
       DATABASE_NAME: `${env.DATABASE_NAME}`,
+      DATABASE_USER: `${env.DATABASE_USER}`,
       DATABASE_HOST: `${env.DATABASE_HOST}`,
       DATABASE_PASSWORD: `${env.DATABASE_PASSWORD}`,
-      DATABASE_PORT: `${env.DATABASE_PORT}`,
+      DATABASE_PORT: +env.DATABASE_PORT || 3306,
       JWT_SECRET: `${env.JWT_SECRET}`,
     };
   },

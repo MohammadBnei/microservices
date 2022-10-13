@@ -26,7 +26,7 @@ jobs:
         # Docker Hub image
         image: bitnami/mariadb:10.9.3
         ports:
-          - 3306:3306
+          - 336:3306
         env:
           ALLOW_EMPTY_PASSWORD: yes
           MARIADB_DATABASE: user
@@ -89,6 +89,7 @@ jobs:
         run: pnpm test:e2e
         env:
           DATABASE_HOST: localhost
+          DATABASE_PORT: 336
           DATABASE_PASSWORD: password
           DATABASE_USER: nestjs
           DATABASE_NAME: test
