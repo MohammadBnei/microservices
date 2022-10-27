@@ -33,6 +33,8 @@ services:
       - DATABASE_PASSWORD=password
       - DATABASE_NAME=test
       - JWT_SECRET=test
+    depends_on:
+      - mariadb
     command: npm run test:e2e
 
   user-api-prod:
