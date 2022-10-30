@@ -132,7 +132,7 @@ jobs:
       # Optionally check the tag we got back
       - name: Check outputs
         run: |
-          echo "Latest Image Tag - ${{ steps.latest_tag.outputs.tag }}"
+          echo "Latest ${{env.image}} Tag - ${{ steps.latest_tag.outputs.tag }}"
 
       - name: Build and push
         id: docker_build
@@ -141,10 +141,11 @@ jobs:
           context: ./user-api
           file: ./user-api/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          push: true
+          push: ${{ steps.latest_tag.outputs.tag }} != ${{ env.PACKAGE_VERSION }}
           tags:
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{env.image}}:${{ env.PACKAGE_VERSION }},
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{env.image}}:latest
+          platforms: linux/amd64,linux/arm64
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
