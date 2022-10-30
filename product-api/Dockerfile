@@ -25,4 +25,4 @@ WORKDIR /app
 COPY --from=0 /app/dist /app/dist/
 COPY --from=0 /app/node_modules /app/node_modules/
 
-CMD pm2-runtime start ./dist/src/main.js
+CMD pm2-runtime start ./dist/main.js

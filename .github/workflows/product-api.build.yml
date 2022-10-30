@@ -144,7 +144,7 @@ jobs:
           context: ./product-api
           file: ./product-api/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          push: ${{ steps.latest_tag.outputs.tag != env.PACKAGE_VERSION }}
+          push: true
           tags:
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{env.image}}:${{ env.PACKAGE_VERSION }},
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{env.image}}:latest
