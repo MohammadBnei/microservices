@@ -8,7 +8,7 @@ import {
   Unique,
   wrap,
 } from '@mikro-orm/core';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { Role } from '../../tokens';
 import { UserData } from './user.data';
 import { UserInput } from './user.input';
