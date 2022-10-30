@@ -17,7 +17,6 @@ specifiers:
   '@nestjs/schematics': ^9.0.3
   '@nestjs/swagger': ^6.1.2
   '@nestjs/testing': ^9.1.6
-  '@types/bcrypt': ^5.0.0
   '@types/cookie-parser': ^1.4.3
   '@types/express': ^4.17.14
   '@types/jest': 29.1.2
@@ -89,7 +88,6 @@ devDependencies:
   '@nestjs/cli': 9.1.5
   '@nestjs/schematics': 9.0.3_typescript@4.8.4
   '@nestjs/testing': 9.1.6_ymrbmmkpvmejpm3rdaw5glgevq
-  '@types/bcrypt': 5.0.0
   '@types/cookie-parser': 1.4.3
   '@types/express': 4.17.14
   '@types/jest': 29.1.2
@@ -1551,12 +1549,6 @@ packages:
     resolution: {integrity: sha512-FcFaxOr2V5KZCviw1TnutEMVUVsGt4D2hP1TAfXZAMKuHYW3xQhe3jTxNPWutgCJ3/X1c5yX8ZoGVEItxKbwBg==}
     dependencies:
       '@babel/types': 7.19.4
-    dev: true
-
-  /@types/bcrypt/5.0.0:
-    resolution: {integrity: sha512-agtcFKaruL8TmcvqbndlqHPSJgsolhf/qPWchFlgnW1gECTN/nKbFcoFnvKAQRFfKbh+BO6A3SWdJu9t+xF3Lw==}
-    dependencies:
-      '@types/node': 18.11.7
     dev: true
 
   /@types/body-parser/1.19.2:
