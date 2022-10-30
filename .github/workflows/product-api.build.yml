@@ -148,7 +148,7 @@ jobs:
           tags:
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{env.image}}:${{ env.PACKAGE_VERSION }},
             ${{ secrets.DOCKER_HUB_USERNAME }}/${{env.image}}:latest
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64, linux/arm/v8
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
