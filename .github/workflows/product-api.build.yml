@@ -73,8 +73,8 @@ jobs:
 
       - name: E2E Test
         run: |
-          pnpm mikro-orm schema:fresh -r
-          pnpm mikro-orm migration:fresh --seed
+          pnpm mikro-orm schema:fresh -r && \
+          pnpm mikro-orm migration:fresh --seed && \
           pnpm test:e2e
         env:
           DATABASE_HOST: localhost

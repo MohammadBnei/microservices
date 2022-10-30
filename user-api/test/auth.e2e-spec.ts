@@ -3,7 +3,7 @@ import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { Role } from '../src/tokens';
-import { UserSeeder } from './UserSeeder';
+import { UserSeeder } from '../src/seeders/UserSeeder';
 import { UserData } from '../src/user/model';
 
 const apiUrl = (strings) => {

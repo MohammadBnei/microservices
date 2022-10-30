@@ -18,7 +18,7 @@ jobs:
   # Label of the container job
   build-test:
     # Containers must run in Linux based operating systems
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     services:
     #   # Label used to access the service container
@@ -26,12 +26,10 @@ jobs:
         # Docker Hub image
         image: bitnami/mariadb:10.9.3
         ports:
-          - 336:3306
+          - 3306:3306
         env:
           ALLOW_EMPTY_PASSWORD: yes
-          MARIADB_DATABASE: user
-          MARIADB_USER: nestjs
-          MARIADB_PASSWORD: password
+          MARIADB_DATABASE: test
         options: >-
           --health-cmd="mysql --protocol=tcp -h mariadb -u root -e 'show databases;'"
           --health-interval=5s 
@@ -70,28 +68,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      # - uses: isbang/compose-action@v1.3.2
-      #   with:
-      #     compose-file: "compose.yml"
-      #     down-flags: "--volumes"
-      #     services: |
-      #       mariadb
-      #   env:
-      #     ALLOW_EMPTY_PASSWORD: "yes"
-      #     MARIADB_DATABASE: "user"
-      #     MARIADB_USER: "nestjs"
-      #     MARIADB_PASSWORD: "password"
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: E2E Test
-        run: pnpm test:e2e
+        run: |
+          pnpm mikro-orm schema:fresh -r && \
+          pnpm mikro-orm migration:fresh --seed && \
+          pnpm test:e2e
         env:
           DATABASE_HOST: localhost
-          DATABASE_PORT: 336
-          DATABASE_PASSWORD: password
-          DATABASE_USER: nestjs
+          DATABASE_PORT: 3306
           DATABASE_NAME: test
           JWT_SECRET: secret
 

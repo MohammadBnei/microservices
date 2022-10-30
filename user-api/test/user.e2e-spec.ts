@@ -8,9 +8,9 @@ import {
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { Role } from '../src/tokens';
-import { UserSeeder } from './UserSeeder';
 import { UserData } from 'src/user/model';
 import { Reflector } from '@nestjs/core';
+import { UserSeeder } from '../src/seeders/UserSeeder';
 
 const apiUrl = (strings) => {
   return `/api/v1/${strings[0]}`;

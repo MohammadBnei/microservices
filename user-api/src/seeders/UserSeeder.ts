@@ -1,7 +1,7 @@
 import type { EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
-import { User } from '../src/user/model';
-import { Role } from '../src/tokens';
+import { User } from '../user/model';
+import { Role } from '../tokens';
 
 export class UserSeeder extends Seeder {
   static houari: Partial<User> = {

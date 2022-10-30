@@ -13,7 +13,7 @@ export const configProvider = {
       SWAGGER_ENABLE: Joi.string(),
       DATABASE_HOST: Joi.string().required(),
       DATABASE_PORT: Joi.string(),
-      DATABASE_PASSWORD: Joi.string().required(),
+      DATABASE_PASSWORD: Joi.string(),
       DATABASE_USER: Joi.string().required(),
       DATABASE_NAME: Joi.string().required(),
       JWT_SECRET: Joi.string().required(),

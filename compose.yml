@@ -10,6 +10,7 @@ services:
       - 3306:3306
     volumes:
       - mariadb_data:/bitnami/mariadb
+      - ./dev:/docker-entrypoint-initdb.d
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_DATABASE=user

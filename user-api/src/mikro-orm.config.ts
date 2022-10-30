@@ -15,7 +15,7 @@ const config: Options = {
   type: 'mysql',
   host,
   user,
-  password,
+  // password,
   dbName,
   port,
   debug: process.env.NODE_ENV === 'dev',

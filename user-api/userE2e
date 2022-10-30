@@ -1,0 +1,8 @@
+export DATABASE_HOST=localhost 
+export DATABASE_USER=root 
+export DATABASE_NAME=test 
+export JWT_SECRET=secret
+
+nr mikro-orm schema:fresh -r && \
+nr mikro-orm migration:fresh --seed && \
+nr test:e2e
