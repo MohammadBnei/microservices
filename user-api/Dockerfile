@@ -2,7 +2,7 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-RUN apk --no-cache add curl
+RUN apk --no-cache add curl python
 
 COPY . .
 
