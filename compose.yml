@@ -46,6 +46,8 @@ services:
       - DATABASE_PASSWORD=password
       - DATABASE_NAME=user
       - JWT_SECRET=test
+    depends_on:
+      - mariadb
     ports:
       - 8080:3000
 

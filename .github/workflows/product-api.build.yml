@@ -1,0 +1,135 @@
+name: Product api build and test
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - product-api/**
+      - .github/workflows/product-api.build.yml
+  pull_request:
+    branches:
+      - master
+    paths:
+      - product-api/**
+      - .github/workflows/product-api.build.yml
+
+jobs:
+  # Label of the container job
+  build-test:
+    # Containers must run in Linux based operating systems
+    runs-on: ubuntu-latest
+
+    services:
+    #   # Label used to access the service container
+      mariadb:
+        # Docker Hub image
+        image: bitnami/mariadb:10.9.3
+        ports:
+          - 3306:3306
+        env:
+          ALLOW_EMPTY_PASSWORD: yes
+          MARIADB_DATABASE: test
+          MARIADB_PRODUCT: nestjs
+          MARIADB_PASSWORD: password
+        options: >-
+          --health-cmd="mysql --protocol=tcp -h mariadb -u root -e 'show databases;'"
+          --health-interval=5s 
+          --health-timeout=2s 
+          --health-retries=5
+
+
+    defaults:
+      run:
+        working-directory: product-api
+
+    steps:
+      # Downloads a copy of the code in your repository before running CI tests
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.13.4
+          run_install: false
+          
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: E2E Test
+        run: |
+          pnpm mikro-orm schema:fresh -r
+          pnpm mikro-orm migration:fresh --seed
+          pnpm test:e2e
+        env:
+          DATABASE_HOST: localhost
+          DATABASE_PORT: 3306
+          DATABASE_PASSWORD: password
+          DATABASE_PRODUCT: nestjs
+          DATABASE_NAME: test
+          JWT_SECRET: secret
+
+      - name: Build
+        run: pnpm build
+
+  docker-publish:
+    needs: build-test
+
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    defaults:
+      run:
+        working-directory: ./product-api
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          productname: ${{ secrets.DOCKER_HUB_PRODUCTNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./product-api
+          file: ./product-api/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_PRODUCTNAME }}/ms-course-product-api:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
