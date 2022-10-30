@@ -89,7 +89,7 @@ jobs:
     needs: build-test
 
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && ${{ secrets.DOCKER_PUBLISH }} == true
+    if: github.event_name == 'tag'
     defaults:
       run:
         working-directory: ./user-api
