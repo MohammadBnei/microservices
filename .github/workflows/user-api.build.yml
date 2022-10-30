@@ -119,6 +119,18 @@ jobs:
         with:
           path: "product-api/package.json" # Optional
 
+      - name: Get latest tag
+        id: latest_tag
+        uses: jacobtomlinson/gha-get-docker-hub-tags@0.1.1
+        with:
+          org: ${{secrets.DOCKER_HUB_USERNAME}} # Docker Hub user or organisation name
+          repo: "product-api" # Docker Hub repository name
+
+      # Optionally check the tag we got back
+      - name: Check outputs
+        run: |
+          echo "Latest Image Tag - ${{ steps.latest_tag.outputs.tag }}"
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v3.2.0
@@ -127,8 +139,8 @@ jobs:
           file: ./user-api/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: 
-            ${{ secrets.DOCKER_HUB_USERNAME }}/ms-course-product-api:${{ env.PACKAGE_VERSION }}, 
+          tags:
+            ${{ secrets.DOCKER_HUB_USERNAME }}/ms-course-product-api:${{ env.PACKAGE_VERSION }},
             ${{ secrets.DOCKER_HUB_USERNAME }}/ms-course-user-api:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
