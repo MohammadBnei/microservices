@@ -5,7 +5,7 @@ import {
   INestApplication,
   ValidationPipe,
 } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { Role } from '../src/tokens';
 import { UserData } from 'src/user/model';
