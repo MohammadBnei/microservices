@@ -7,7 +7,6 @@ import config from '../../mikro-orm.config';
 
 describe('UserController', () => {
   let controller: UserController;
-  let service: UserService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -16,7 +15,6 @@ describe('UserController', () => {
       imports: [MikroOrmModule.forRoot(config)],
     }).compile();
 
-    service = moduleRef.get<UserService>(UserService);
     controller = moduleRef.get<UserController>(UserController);
   });
 

@@ -13,7 +13,12 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from '../../auth/guard/admin.guard';
 import { OwnAccessGuard } from '../../auth/guard/own-access.guard';
 import { User, UserData, UserInput } from '../model';
-import { IdInput, LoginInput, UpdateInput } from '../model/user.input';
+import {
+  CreditInput,
+  IdInput,
+  LoginInput,
+  UpdateInput,
+} from '../model/user.input';
 import { UserService } from '../service';
 
 @Controller('user')
@@ -21,6 +26,19 @@ import { UserService } from '../service';
 @ApiBearerAuth()
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Put('credit/:id')
+  @UseGuards(AdminGuard)
+  @ApiResponse({ status: HttpStatus.OK })
+  async creditUser(
+    @Param() { id }: IdInput,
+    @Body() data: CreditInput,
+  ): Promise<UserData> {
+    const user = this.userService.getUserOrFail('' + id);
+    return this.userService.updateUser(id, {
+      credit: (await user).credit + data.credit,
+    });
+  }
 
   @Get(':id')
   @UseGuards(OwnAccessGuard)
@@ -43,7 +61,6 @@ export class UserController {
   }
 
   @Post('compare')
-  @UseGuards(OwnAccessGuard)
   @ApiResponse({ status: HttpStatus.OK, type: UserData })
   async comparePassword(@Body() data: LoginInput): Promise<UserData> {
     return await this.userService.comparePassword(data.email, data.password);

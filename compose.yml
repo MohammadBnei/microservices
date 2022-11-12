@@ -39,7 +39,7 @@ services:
     command: npm run test:e2e
 
   user-api-prod:
-    image: mohammaddocker/ms-course-user-api:0.0.2
+    image: mohammaddocker/ms-course-user-api:0.0.5
     environment:
       - DATABASE_HOST=mariadb
       - PORT=3000
@@ -51,7 +51,7 @@ services:
     ports:
       - 8080:3000
   product-api-prod:
-    image: mohammaddocker/ms-course-product-api:0.0.2
+    image: mohammaddocker/ms-course-product-api:0.0.4
     environment:
       - DATABASE_HOST=mariadb
       - PORT=3000

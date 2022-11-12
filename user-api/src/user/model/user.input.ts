@@ -62,6 +62,9 @@ export class UpdateInput {
   @Transform(lowerTrim)
   public readonly lastname: string;
 
+  @ApiProperty({ description: 'Credit', example: 12.6 })
+  public readonly credit: number;
+
   @ApiProperty({
     description: 'User role, buyer or seller',
     example: 'buyer',
@@ -79,4 +82,12 @@ export class IdInput {
   })
   @Transform(({ value }) => +value)
   public readonly id: number;
+}
+
+export class CreditInput {
+  @ApiProperty({
+    description: "The user's credit",
+    example: 324,
+  })
+  public readonly credit: number;
 }

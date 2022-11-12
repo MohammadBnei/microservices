@@ -13,7 +13,7 @@ export class UserService {
 
   getUsers(): Promise<User[]> {
     return this.ur.findAll({
-      fields: ['email', 'lastname', 'firstname', 'role'],
+      fields: ['email', 'lastname', 'firstname', 'role', 'credit'],
     });
   }
 
@@ -60,7 +60,10 @@ export class UserService {
     return user.toJSON();
   }
 
-  async updateUser(id: string | number, data: UpdateInput): Promise<UserData> {
+  async updateUser(
+    id: string | number,
+    data: Partial<UpdateInput>,
+  ): Promise<UserData> {
     const user = await this.ur.findOne({ id: +id });
 
     if (!user) {

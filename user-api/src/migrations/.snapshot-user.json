@@ -61,6 +61,15 @@
             "admin"
           ],
           "mappedType": "enum"
+        },
+        "credit": {
+          "name": "credit",
+          "type": "float",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "float"
         }
       },
       "name": "user",

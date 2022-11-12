@@ -4,7 +4,7 @@ import { configProvider } from './common';
 const {
   DATABASE_HOST: host,
   DATABASE_USER: user,
-  DATABASE_PASSWORD: password,
+  // DATABASE_PASSWORD: password,
   DATABASE_NAME: dbName,
   DATABASE_PORT: port,
 } = configProvider.useFactory();
@@ -19,6 +19,8 @@ const config: Options = {
   dbName,
   port,
   debug: process.env.NODE_ENV === 'dev',
+  validate: true,
+  strict: true,
 };
 
 export default config;

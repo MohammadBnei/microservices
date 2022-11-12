@@ -97,6 +97,36 @@ describe('UserController (e2e)', () => {
     expect(users?.length).toBeGreaterThanOrEqual(3);
   });
 
+  it('should connect with the admin user and credit a user', async () => {
+    let res = await request(app.getHttpServer())
+      .post(apiUrl`auth/login`)
+      .send({
+        email: UserSeeder.houari.email,
+        password: UserSeeder.houari.firstname,
+      })
+      .set('Accept', 'application/json');
+
+    expect(res.status).toBe(HttpStatus.CREATED);
+
+    const jwt = res.body?.jwt;
+    expect(jwt).toBeDefined();
+
+    const user: UserData = res.body?.user;
+    expect(user).toBeDefined();
+    expect(user.role).toBe(UserSeeder.houari.role);
+    expect(user.role).toBe(Role.ADMIN);
+
+    res = await request(app.getHttpServer())
+      .put(apiUrl`user/credit/` + 3)
+      .set('Authorization', 'Bearer ' + jwt)
+      .set('Accept', 'application/json')
+      .send({ credit: 10 });
+
+    expect(res.status).toBe(HttpStatus.OK);
+
+    expect(res.body?.credit).toBe(110);
+  });
+
   afterAll(async () => {
     app.close();
   });

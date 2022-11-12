@@ -22,4 +22,10 @@ export class UserData {
     enum: Role,
   })
   public readonly role: Role;
+
+  @ApiProperty({
+    description: "User's credit",
+    example: 45.12,
+  })
+  public readonly credit: number;
 }

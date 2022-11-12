@@ -35,6 +35,11 @@ export class User {
   @Enum(() => Role)
   role: Role;
 
+  @Property({
+    columnType: 'float',
+  })
+  credit = 100;
+
   @BeforeCreate()
   async beforeCreate() {
     this.password = await bcrypt.hash(
