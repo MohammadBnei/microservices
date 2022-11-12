@@ -1,29 +1,22 @@
 import * as winston from 'winston';
-
+import ecsFormat from '@elastic/ecs-winston-format';
 export class LoggerService {
   private readonly instance: winston.Logger;
 
   public constructor() {
-    const format = this.isProductionEnv()
-      ? winston.format.combine(
-          winston.format.timestamp(),
-          winston.format.json(),
-        )
-      : winston.format.combine(
-          winston.format.colorize(),
-          winston.format.simple(),
-        );
-
     this.instance = winston.createLogger({
       level: 'info',
       silent: this.isTestEnv(),
-      format,
+      format: ecsFormat(),
       defaultMeta: {
         api: 'user',
       },
       transports: [
         new winston.transports.Console({
           stderrLevels: ['error'],
+        }),
+        new winston.transports.File({
+          filename: 'logs/user-api',
         }),
       ],
     });

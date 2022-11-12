@@ -1,0 +1,21 @@
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: true
+
+
+filebeat.inputs:
+  - type: filestream
+    paths:
+      - /var/log/user-api.log
+    enabled: true
+    tail_files: true
+
+# output.logstash:
+#   hosts: ["logstash:5044"]
+
+processors:
+  - add_cloud_metadata: ~
+
+output.elasticsearch:
+  hosts: "${ELASTICSEARCH_HOSTS:http://kiba:kibanana@elastic:9200}"
