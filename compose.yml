@@ -57,6 +57,8 @@ services:
       - setup.kibana.host=elastic:5601
       - output.elasticsearch.hosts=["elastic:9200"]
       - strict.perms=false
+    volumes_from:
+      - user-api-prod
     volumes:
       - ./dev/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./user-api/logs/user-api:/var/log/user-api.log:ro
@@ -86,13 +88,15 @@ services:
     command: npm run test:e2e
 
   user-api-prod:
-    image: mohammaddocker/ms-course-user-api:0.0.5
+    image: mohammaddocker/ms-course-user-api:1.0.1
     environment:
       - DATABASE_HOST=mariadb
       - PORT=3000
       - DATABASE_USER=root
       - DATABASE_NAME=user
       - JWT_SECRET=test
+    volumes:
+      - /app/logs/
     depends_on:
       - mariadb
     ports:

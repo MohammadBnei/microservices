@@ -8,6 +8,7 @@ filebeat.inputs:
   - type: filestream
     paths:
       - /var/log/user-api.log
+      - /app/logs/user-api
     enabled: true
     tail_files: true
 
