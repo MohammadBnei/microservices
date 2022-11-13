@@ -1,5 +1,6 @@
 import * as winston from 'winston';
 import ecsFormat from '@elastic/ecs-winston-format';
+import LogstashTransport from 'winston3-logstash-transport';
 export class LoggerService {
   private readonly instance: winston.Logger;
 
@@ -7,11 +8,16 @@ export class LoggerService {
     this.instance = winston.createLogger({
       level: 'info',
       silent: this.isTestEnv(),
-      format: ecsFormat(),
+      format: ecsFormat({ convertReqRes: true }),
       defaultMeta: {
         api: 'user',
       },
       transports: [
+        new LogstashTransport({
+          mode: 'udp',
+          host: 'localhost',
+          port: 3333,
+        }),
         new winston.transports.Console({
           stderrLevels: ['error'],
         }),

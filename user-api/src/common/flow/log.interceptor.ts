@@ -30,6 +30,7 @@ export class LogInterceptor implements NestInterceptor {
           `[${this.getTimeDelta(startTime)}ms] ${
             request.ip
           } ${responseStatus} ${request.method} ${request.originalUrl}`,
+          { req: request },
         );
         return data;
       }),
@@ -40,6 +41,7 @@ export class LogInterceptor implements NestInterceptor {
           `${this.getTimeDelta(startTime)}ms ${request.ip} ${err.status} ${
             request.method
           } ${this.getUrl(request)}`,
+          { req: request },
         );
         return throwError(() => err);
       }),

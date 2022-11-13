@@ -13,10 +13,14 @@ filebeat.inputs:
     tail_files: true
 
 # output.logstash:
-#   hosts: ["logstash:5044"]
 
 processors:
   - add_cloud_metadata: ~
 
-output.elasticsearch:
-  hosts: "${ELASTICSEARCH_HOSTS:http://kiba:kibanana@elastic:9200}"
+output:
+  # elasticsearch:
+  #   hosts: "${ELASTICSEARCH_HOSTS:http://kiba:kibanana@elastic:9200}"
+  logstash:
+    hosts: ["logstash:5044"]
+
+setup.kibana.host: kibana:5601

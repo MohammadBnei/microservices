@@ -59,6 +59,7 @@ specifiers:
   winston: ^3.8.2
   winston-elasticsearch: ^0.17.1
   winston-logstash: ^1.0.2
+  winston-logstash-ts: ^0.2.3
   winston3-logstash-transport: ^1.2.3
 
 dependencies:
@@ -92,6 +93,7 @@ dependencies:
   winston: 3.8.2
   winston-elasticsearch: 0.17.1
   winston-logstash: 1.0.2_winston@3.8.2
+  winston-logstash-ts: 0.2.3
   winston3-logstash-transport: 1.2.3
 
 devDependencies:
@@ -6670,6 +6672,17 @@ packages:
       winston-transport: 4.5.0
     optionalDependencies:
       elastic-apm-node: 3.40.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /winston-logstash-ts/0.2.3:
+    resolution: {integrity: sha512-13tU9TQoYoIaZybdAwmAW9ZOz6342jRbADoe1NITgo5oERCWxPI41huAMp0AqYuMAzutm6bXpR6ZmqVuaGXppA==}
+    dependencies:
+      debug: 4.3.4
+      logform: 2.4.2
+      winston: 3.8.2
+      winston-transport: 4.5.0
     transitivePeerDependencies:
       - supports-color
     dev: false

@@ -54,6 +54,7 @@
     "winston": "^3.8.2",
     "winston-elasticsearch": "^0.17.1",
     "winston-logstash": "^1.0.2",
+    "winston-logstash-ts": "^0.2.3",
     "winston3-logstash-transport": "^1.2.3"
   },
   "devDependencies": {
