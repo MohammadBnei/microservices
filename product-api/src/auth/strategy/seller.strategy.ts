@@ -21,7 +21,7 @@ export class SellerStrategy extends PassportStrategy(Strategy, 'seller') {
 
   async validate(_: Request, payload: any): Promise<any> {
     if (payload.role === Role.ADMIN || payload.role === Role.SELLER) {
-      return { email: payload.email, role: payload.role };
+      return { email: payload.email, role: payload.role, id: payload.id };
     }
     throw new UnauthorizedException('you must be admin or seller');
   }
