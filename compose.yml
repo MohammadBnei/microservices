@@ -57,13 +57,11 @@ services:
       - setup.kibana.host=elastic:5601
       - output.elasticsearch.hosts=["elastic:9200"]
       - strict.perms=false
-    volumes_from:
-      - user-api-prod
+    # volumes_from:
+    #   - user-api-prod
     volumes:
       - ./dev/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./user-api/logs/user-api:/var/log/user-api.log:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
       co.elastic.logs/json.keys_under_root: true
       co.elastic.logs/json.overwrite_keys: true

@@ -14,6 +14,13 @@ export class ProductInput {
   public readonly name: string;
 
   @ApiProperty({
+    description: 'User if of the product',
+    example: '1',
+  })
+  @Length(1)
+  public readonly userId: string;
+
+  @ApiProperty({
     description: 'Quantity of avalaible product',
     example: 5,
   })

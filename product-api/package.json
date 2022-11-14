@@ -29,6 +29,7 @@
     "@mikro-orm/migrations": "^5.4.2",
     "@mikro-orm/mysql": "^5.4.2",
     "@mikro-orm/nestjs": "^5.1.2",
+    "@nestjs/axios": "^1.0.0",
     "@nestjs/common": "^9.1.4",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.1.4",

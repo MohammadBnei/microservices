@@ -17,6 +17,9 @@ export class Product {
   @Property()
   quantity: number;
 
+  @Property()
+  userId: string;
+
   toJSON(): ProductData {
     const product = wrap(this).toObject() as Product;
 
