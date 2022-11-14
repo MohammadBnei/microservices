@@ -46,17 +46,18 @@ export class ProductController {
   @UseGuards(SellerGuard)
   @ApiResponse({ status: HttpStatus.CREATED })
   async createProduct(@Body() data: ProductInput, @Req() req): Promise<void> {
-    const { userId } = data;
-    const jwt = this.jwtService.sign(req.user);
+    const jwt = this.jwtService.sign({ ...req.user, source: 'product-api' });
     let user: UserData;
-    try {
-      user = await this.userService.findUser(userId, jwt);
-    } catch (error) {
-      throw new HttpException('invalid user id', HttpStatus.BAD_REQUEST);
-    }
 
-    if (!user?.id)
-      throw new HttpException('invalid user id', HttpStatus.BAD_REQUEST);
+    try {
+      user = await this.userService.findUser(data.userId, jwt);
+      if (!user) {
+        throw new HttpException('user not found', HttpStatus.BAD_REQUEST);
+      }
+    } catch (error) {
+      console.log({ repsonse: error.response });
+      throw new HttpException('user not found', HttpStatus.BAD_REQUEST);
+    }
 
     return this.productService.createProduct(data);
   }

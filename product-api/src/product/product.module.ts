@@ -11,11 +11,11 @@ import { UserModule } from '../user/user.module';
   imports: [
     MikroOrmModule.forFeature({ entities: [Product] }),
     CommonModule,
+    UserModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '5m' },
     }),
-    UserModule,
   ],
   providers: [ProductService],
   controllers: [ProductController],
