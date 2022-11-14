@@ -12,4 +12,10 @@ export class ProductData {
     example: 5,
   })
   public readonly quantity: number;
+
+  @ApiProperty({
+    description: 'Price of the product',
+    example: 50,
+  })
+  public readonly price: number;
 }

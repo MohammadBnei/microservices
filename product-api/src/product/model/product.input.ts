@@ -19,6 +19,13 @@ export class ProductInput {
   })
   @IsPositive()
   public readonly quantity: number;
+
+  @ApiProperty({
+    description: 'Price of the product',
+    example: 50,
+  })
+  @IsPositive()
+  public readonly price: number;
 }
 
 export class IdInput {
