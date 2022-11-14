@@ -20,6 +20,6 @@ export class AdminStrategy extends PassportStrategy(Strategy, 'admin') {
     if (payload.role !== Role.ADMIN) {
       throw new UnauthorizedException('You must be admin.');
     }
-    return { email: payload.email, role: payload.role };
+    return { email: payload.email, role: payload.role, id: payload.id };
   }
 }

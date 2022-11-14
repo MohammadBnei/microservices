@@ -12,4 +12,10 @@ export class ProductData {
     example: 5,
   })
   public readonly quantity: number;
+
+  @ApiProperty({
+    description: 'Id of the owner',
+    example: '1',
+  })
+  public readonly userId: string;
 }

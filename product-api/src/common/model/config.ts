@@ -10,6 +10,8 @@ export interface Config {
   readonly DATABASE_PORT: number;
   readonly DATABASE_PASSWORD: string;
 
+  readonly USER_API_URL: string;
+
   readonly SWAGGER_ENABLE: number;
 
   readonly JWT_SECRET: string;
