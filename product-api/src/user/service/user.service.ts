@@ -1,15 +1,11 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { catchError, firstValueFrom } from 'rxjs';
-import { LoggerService } from 'src/common';
+import { firstValueFrom } from 'rxjs';
 import { UserData } from '../entity';
 
 @Injectable()
 export class UserService {
-  constructor(
-    private readonly httpService: HttpService,
-    private readonly logger: LoggerService,
-  ) {}
+  constructor(private readonly httpService: HttpService) {}
 
   async findUser(userId: string, jwt: string): Promise<UserData> {
     const { data } = await firstValueFrom(
