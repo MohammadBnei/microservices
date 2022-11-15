@@ -6,16 +6,22 @@ export class ProductSeeder extends Seeder {
   static escabot: Partial<Product> = {
     name: 'escabot',
     quantity: 23,
+    userId: '12',
+    price: 47,
   };
 
   static pelle: Partial<Product> = {
     name: 'pelle',
     quantity: 1,
+    userId: '12',
+    price: 21,
   };
 
   static brouette: Partial<Product> = {
     name: 'brouette',
     quantity: 0,
+    userId: '12',
+    price: 19,
   };
 
   constructor() {
@@ -33,6 +39,8 @@ export class ProductSeeder extends Seeder {
       em.create(Product, {
         name: 'fouet' + i,
         quantity: i + 12,
+        userId: `${i}`,
+        price: 20 + i,
       });
     }
   }

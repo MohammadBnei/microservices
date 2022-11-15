@@ -14,8 +14,8 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UserData } from 'src/user/entity';
-import { UserService } from 'src/user/service';
+import { UserData } from '../../user/entity';
+import { UserService } from '../../user/service';
 import { SellerGuard } from '../../auth/guard/seller.guard';
 import { ProductData, ProductInput } from '../model';
 import { IdInput, ProductQuery } from '../model/product.input';
