@@ -17,7 +17,6 @@ export const configProvider = {
       DATABASE_USER: Joi.string().required(),
       DATABASE_NAME: Joi.string().required(),
       JWT_SECRET: Joi.string().required(),
-      USER_API_URL: Joi.string(),
     });
 
     const result = validationSchema.validate(env);
@@ -27,7 +26,7 @@ export const configProvider = {
     }
 
     return {
-      PORT: +env.API_PORT || 3000,
+      PORT: +env.PORT || 3000,
       API_PREFIX: `${env.API_PREFIX || '/api/v1'}`,
       SWAGGER_ENABLE: +env.SWAGGER_ENABLE || 1,
       DATABASE_URL: `${env.DATABASE_URL}`,
@@ -37,7 +36,6 @@ export const configProvider = {
       DATABASE_PASSWORD: `${env.DATABASE_PASSWORD}`,
       DATABASE_PORT: +env.DATABASE_PORT || 3306,
       JWT_SECRET: `${env.JWT_SECRET}`,
-      USER_API_URL: `${env.USER_API_URL || 'http://localhost:3000/api/v1/'}`,
     };
   },
 };
