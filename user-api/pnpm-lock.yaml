@@ -58,7 +58,6 @@ specifiers:
   webpack: ^5.74.0
   winston: ^3.8.2
   winston-elasticsearch: ^0.17.1
-  winston-logstash: ^1.0.2
   winston3-logstash-transport: ^1.2.3
 
 dependencies:
@@ -91,7 +90,6 @@ dependencies:
   webpack: 5.74.0
   winston: 3.8.2
   winston-elasticsearch: 0.17.1
-  winston-logstash: 1.0.2_winston@3.8.2
   winston3-logstash-transport: 1.2.3
 
 devDependencies:
@@ -6672,16 +6670,6 @@ packages:
       elastic-apm-node: 3.40.0
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /winston-logstash/1.0.2_winston@3.8.2:
-    resolution: {integrity: sha512-5yCvUF+aQPBSYTh1Z6jkcdZ92yD1p5RP/qujU1V5iUgM1ABW1EuBlk5vp46435c+LQ9h17VoBNZE71SNTGMRnA==}
-    engines: {node: '>=6'}
-    peerDependencies:
-      winston: ^0.7.3 || ^1.0.0 || ^2.0.0 || ^3.0.0
-    dependencies:
-      winston: 3.8.2
-      winston-transport: 4.5.0
     dev: false
 
   /winston-transport/4.5.0:

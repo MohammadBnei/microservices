@@ -7,7 +7,7 @@ filebeat.config:
 filebeat.inputs:
   - type: filestream
     paths:
-      - /var/log/user-api.log
+      - /var/log/api/*
     enabled: true
     tail_files: true
 

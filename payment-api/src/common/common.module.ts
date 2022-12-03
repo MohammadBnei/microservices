@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { configProvider } from './provider/config.provider';
+
+import { LogInterceptor } from './flow';
+import { WinstonLogger, configProvider } from './provider';
 
 @Module({
-  providers: [configProvider],
-  exports: [configProvider],
+  providers: [configProvider, WinstonLogger, LogInterceptor],
+  exports: [configProvider, WinstonLogger, LogInterceptor],
 })
 export class CommonModule {}

@@ -1,29 +1,26 @@
-import { NestFactory } from '@nestjs/core';
-import { createLogger, transports } from 'winston';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import ecsFormat from '@elastic/ecs-winston-format';
-import { WinstonModule } from 'nest-winston';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import { CommonModule, WinstonLogger, LogInterceptor } from './common';
 
 async function bootstrap() {
-  const instance = createLogger({
-    format: ecsFormat(),
-    defaultMeta: {
-      api: 'payment',
-    },
-    transports: [
-      new transports.Console({
-        stderrLevels: ['error'],
-      }),
-      new transports.File({
-        filename: './logs/log',
-      }),
-    ],
+  const logger = new WinstonLogger();
+  const app = await NestFactory.create(AppModule, {
+    logger,
   });
-  const app = await NestFactory.create(AppModule);
 
   app.use(cookieParser());
+
+  app.setGlobalPrefix(process.env.API_PREFIX || '/api/v1/');
+
+  const logInterceptor = app.select(CommonModule).get(LogInterceptor);
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector)),
+    logInterceptor,
+  );
 
   const config = new DocumentBuilder()
     .setTitle('Payment API')
@@ -35,6 +32,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(process.env.PORT || 3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port, () => logger.log(`listening on port : ${port}`));
 }
 bootstrap();

@@ -10,7 +10,7 @@ export class WinstonLogger implements LoggerService {
       level: 'info',
       silent: this.isTestEnv(),
       defaultMeta: {
-        api: 'user',
+        api: 'payment',
       },
       transports: [
         new winston.transports.Console({

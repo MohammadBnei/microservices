@@ -8,7 +8,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
-import { CommonModule, LogInterceptor } from './common';
+import { CommonModule, WinstonLogger, LogInterceptor } from './common';
 
 export function createSwagger(app: INestApplication) {
   const version = process.env.npm_package_version;
@@ -25,7 +25,10 @@ export function createSwagger(app: INestApplication) {
 }
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const logger = new WinstonLogger();
+  const app = await NestFactory.create(AppModule, {
+    logger,
+  });
 
   app.use(cookieParser());
 
@@ -41,8 +44,8 @@ async function bootstrap(): Promise<void> {
     new ClassSerializerInterceptor(app.get(Reflector)),
     logInterceptor,
   );
-
-  await app.listen(process.env.PORT || 3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port, () => logger.log(`listening on port : ${port}`));
 }
 
 bootstrap().catch((err) => {

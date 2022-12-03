@@ -41,15 +41,6 @@ services:
     environment:
       - ELASTICSEARCH_URL=http://elastic:9200
 
-  # logstash:
-  #   image: docker.elastic.co/logstash/logstash:8.5.0
-  #   ports:
-  #     - 3333:3333
-  #     - 3334:3334
-  #   volumes:
-  #     - ./dev/logstash.yml:/usr/share/logstash/config/logstash.yml
-  #     - ./dev/pipeline/:/usr/share/logstash/pipeline/
-
   filebeat:
     image: docker.elastic.co/beats/filebeat:8.5.0
     user: root
@@ -61,7 +52,8 @@ services:
     #   - user-api-prod
     volumes:
       - ./dev/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro
-      - ./user-api/logs/user-api:/var/log/user-api.log:ro
+      - ./user-api/logs:/var/log/api/user-api.log:ro
+      - ./payment-api/logs:/var/log/api/payment-api.log:ro
     labels:
       co.elastic.logs/json.keys_under_root: true
       co.elastic.logs/json.overwrite_keys: true
