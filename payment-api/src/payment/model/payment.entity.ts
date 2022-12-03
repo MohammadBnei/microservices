@@ -1,4 +1,12 @@
-import { BeforeUpdate, Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import {
+  BeforeUpdate,
+  Entity,
+  PrimaryKey,
+  Property,
+  wrap,
+} from '@mikro-orm/core';
+import { PaymentData } from './payment.data';
+import { PaymentInput } from './payment.input';
 
 @Entity()
 export class Payment {
@@ -17,11 +25,19 @@ export class Payment {
   @Property()
   created_at = new Date();
 
-  @Property()
+  @Property({ onUpdate: () => new Date() })
   updated_at = new Date();
 
-  @BeforeUpdate()
-  async beforeUpdate() {
-    this.updated_at = new Date();
+  toJSON(): PaymentData {
+    const payment = wrap(this).toObject() as Payment;
+
+    return {
+      ...payment,
+      id: `${payment.id}`,
+    };
+  }
+
+  constructor(newPayment: PaymentInput) {
+    wrap(this).assign({ ...newPayment } as any);
   }
 }

@@ -21,11 +21,7 @@ async function bootstrap() {
       }),
     ],
   });
-  const app = await NestFactory.create(AppModule, {
-    logger: WinstonModule.createLogger({
-      instance,
-    }),
-  });
+  const app = await NestFactory.create(AppModule);
 
   app.use(cookieParser());
 

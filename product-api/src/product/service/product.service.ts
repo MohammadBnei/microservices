@@ -59,7 +59,7 @@ export class ProductService {
 
   async updateProduct(
     id: string | number,
-    data: ProductInput,
+    data: Partial<ProductInput>,
   ): Promise<ProductData> {
     const product = await this.pr.findOne({ id: +id });
 

@@ -66,7 +66,7 @@ export class ProductController {
   @ApiResponse({ status: HttpStatus.OK })
   async updateProduct(
     @Param() { id }: IdInput,
-    @Body() data: ProductInput,
+    @Body() data: Partial<ProductInput>,
   ): Promise<ProductData> {
     return this.productService.updateProduct(id, data);
   }

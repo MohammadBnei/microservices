@@ -13,4 +13,7 @@ export interface Config {
   readonly SWAGGER_ENABLE: number;
 
   readonly JWT_SECRET: string;
+
+  readonly USER_API_URL: string;
+  readonly PRODUCT_API_URL: string;
 }
