@@ -1,0 +1,85 @@
+name: Payment api build and test
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - payment-api/**
+      - .github/workflows/payment-api.build.yml
+
+  pull_request:
+    branches:
+      - master
+    paths:
+      - payment-api/**
+      - .github/workflows/payment-api.build.yml
+
+env:
+  image: ms-course-payment-api
+
+jobs:
+  docker-publish:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./payment-api
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2.2.1
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2.1.0
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - uses: nyaa8/package-version@v1
+        with:
+          path: "payment-api/package.json" # Optional
+
+      - name: Get latest tag
+        id: latest_tag
+        uses: jacobtomlinson/gha-get-docker-hub-tags@0.1.1
+        with:
+          org: ${{secrets.DOCKER_HUB_USERNAME}} # Docker Hub user or organisation name
+          repo: ${{env.image}} # Docker Hub repository name
+
+      # Optionally check the tag we got back
+      - name: Check outputs
+        run: |
+          echo "Latest ${{env.image}} Tag - ${{ steps.latest_tag.outputs.tag }}"
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: ./payment-api
+          file: ./payment-api/Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          push: ${{ steps.latest_tag.outputs.tag != env.PACKAGE_VERSION }}
+          tags:
+            ${{ secrets.DOCKER_HUB_USERNAME }}/${{env.image}}:${{ env.PACKAGE_VERSION }},
+            ${{ secrets.DOCKER_HUB_USERNAME }}/${{env.image}}:latest
+          platforms: linux/amd64, linux/arm64/v8
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}

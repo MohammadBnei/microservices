@@ -8,7 +8,7 @@ import {
   Unique,
   wrap,
 } from '@mikro-orm/core';
-import * as bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import { Role } from '../../tokens';
 import { UserData } from './user.data';
 import { UserInput } from './user.input';
@@ -42,14 +42,24 @@ export class User {
 
   @BeforeCreate()
   async beforeCreate() {
-    this.password = await bcrypt.hash(
-      this.password,
-      parseInt(process.env.HASH || 'zboubi', 10),
-    );
+    this.password = crypto
+      .pbkdf2Sync(
+        this.password,
+        process.env.HASH || 'zboubi',
+        1000,
+        64,
+        `sha512`,
+      )
+      .toString(`hex`);
   }
 
   async comparePassword(password) {
-    return bcrypt.compare(password, this.password);
+    return (
+      this.password ===
+      crypto
+        .pbkdf2Sync(password, process.env.HASH || 'zboubi', 1000, 64, `sha512`)
+        .toString(`hex`)
+    );
   }
 
   toJSON(): UserData {
